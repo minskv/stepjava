@@ -20,6 +20,7 @@ public class TaskRepository {
             "VALUES  (?, ?, ?) " +
             "ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?";
     static final String SQL_SET_IS_DONE = "UPDATE task SET is_done = ? WHERE id = ?";
+    static final String SQL_ORDER_BY = "SELECT * FROM tasks ORDER BY %s ASC";
 
     private Connection getDatabaseConnection() throws SQLException {
         String url = "jdbc:mysql://localhost/taskmanager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -69,5 +70,21 @@ public class TaskRepository {
             ps.setString(5, task.getDescription());
             ps.execute();
         }
+    }
+
+    List<Task> viewInAsc(String columnName) throws SQLException {
+        String sortCommand = String.format(SQL_ORDER_BY, columnName);
+        List<Task> sortedTaskList = new ArrayList<>();
+        try (Connection connection = getDatabaseConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sortCommand)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Task task = new Task( resultSet.getString("Title"),
+                        resultSet.getString("Description"));
+                task.setDone(resultSet.getBoolean("is_done"));
+                sortedTaskList.add(task);
+            }
+        }
+        return sortedTaskList;
     }
 }

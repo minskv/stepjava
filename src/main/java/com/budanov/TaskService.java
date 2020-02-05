@@ -30,4 +30,8 @@ public class TaskService {
     public void setDone(int taskId, boolean isDone) throws SQLException {
         taskRepository.setIsDone(taskId, isDone);
     }
+
+    public void viewInAsc(String columnName) throws SQLException  {
+        taskRepository.viewInAsc(columnName);
+    }
 }

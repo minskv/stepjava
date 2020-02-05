@@ -35,6 +35,7 @@ public class Menu {
             System.out.println("3 - remove");
             System.out.println("4 - set DONE");
             System.out.println("5 - copy"); //TODO ДОМОЙ
+            System.out.println("6 - view in ascending order");
             System.out.println("9 - exit");
             m = scanner.nextInt();
             scanner.nextLine();
@@ -50,6 +51,9 @@ public class Menu {
                     break;
                 case 4:
                     setDone();
+                    break;
+                case 6:
+                    viewAsc();
                     break;
             }
         } while (m != 9);
@@ -81,5 +85,11 @@ public class Menu {
         int taskId = scanner.nextInt();
         scanner.nextLine();
         taskService.setDone(taskId, true);
+    }
+
+    private void viewAsc() throws SQLException {
+        System.out.println("Enter column name");
+        String columnName = scanner.nextLine();
+        taskService.viewInAsc(columnName);
     }
 }
