@@ -1,11 +1,4 @@
-<<<<<<< HEAdddddddddddd
-Hello world!
-=======
-Hello world!
 
->>>>>>>
-
-
-Hello from Dan
+		              ^	^
                           <==(+_+)==>
                               | |
