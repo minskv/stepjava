@@ -8,12 +8,5 @@ public class Launcher {
         Menu menu = new Menu();
         menu.showMenu();
     }
-
-<<<<<<< HEAD
-//hi
-=======
-    //test
-//by test
-
->>>>>>> 1f2a7f55b317aef5b7cdb8c04e73af798d1c5aa9
+    
 }
