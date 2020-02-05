@@ -1,10 +1,6 @@
-Hello world123
-1
-1
-1
-2
-2
-2
-3
-3
-3
+<<<<<<< HEAD
+Hello world!
+=======
+Hello world!
+
+>>>>>>> bb21079e99819b0057f6a5b9a9a1848d8d23d670
