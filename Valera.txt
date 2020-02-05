@@ -1,0 +1,18 @@
+<<<<<<< HEAdddddddddddd
+Hello world!
+=======
+Hello world!
+
+>>>>>>>
+
+
+Hello from Dan
+                          <==(+_+)==>
+<<<<<<< HEAD
+ 
+(_)(_)
+ )  (
+(    )
+=======
+                              | |
+>>>>>>> ed2757fab580639dce40085c39da5b3bacee7b5e
