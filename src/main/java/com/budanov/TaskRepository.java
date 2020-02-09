@@ -71,7 +71,7 @@ public class TaskRepository {
             ps.execute();
         }
     }
-
+    // Этот метод лишь выводит на экран (в консоль) отсортированный список в алфавитном порядке, не изменяя БД
     List<Task> viewInAsc(String columnName) throws SQLException {
         String sortCommand = String.format(SQL_ORDER_BY, columnName);
         List<Task> sortedTaskList = new ArrayList<>();
@@ -79,7 +79,7 @@ public class TaskRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(sortCommand)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Task task = new Task( resultSet.getString("Title"),
+                Task task = new Task( resultSet.getString("Title"), // в этих строках нужно указать правильные имена колонок со своей БД
                         resultSet.getString("Description"));
                 task.setDone(resultSet.getBoolean("is_done"));
                 sortedTaskList.add(task);

@@ -35,7 +35,7 @@ public class Menu {
             System.out.println("3 - remove");
             System.out.println("4 - set DONE");
             System.out.println("5 - copy"); //TODO ДОМОЙ
-            System.out.println("6 - view in ascending order");
+            System.out.println("6 - view in ascending order"); // добавлен 6 case в switch
             System.out.println("9 - exit");
             m = scanner.nextInt();
             scanner.nextLine();
