@@ -36,6 +36,7 @@ public class Menu {
             System.out.println("4 - set DONE");
             System.out.println("5 - copy"); //TODO ДОМОЙ
             System.out.println("6 - view in ascending order");
+            System.out.println("7 - replacement");
             System.out.println("9 - exit");
             m = scanner.nextInt();
             scanner.nextLine();
@@ -54,6 +55,9 @@ public class Menu {
                     break;
                 case 6:
                     viewAsc();
+                    break;
+                case 7:
+                    replacemnet();
                     break;
             }
         } while (m != 9);
@@ -78,6 +82,18 @@ public class Menu {
         int taskId = scanner.nextInt();
         scanner.nextLine();
         taskService.remove(taskId);
+    }
+
+    private void replacemnet() throws SQLException {
+        System.out.println("Enter task id to remove");
+        int taskId = scanner.nextInt();
+        scanner.nextLine();
+        taskService.remove(taskId);
+        System.out.println("Now,Insert new task title");
+        String title = scanner.nextLine();
+        System.out.println("And insert new task description");
+        String description = scanner.nextLine();
+        taskService.addNewTask(title, description);
     }
 
     private void setDone() throws SQLException {

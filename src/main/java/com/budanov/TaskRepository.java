@@ -46,6 +46,23 @@ public class TaskRepository {
             ps.execute();
         }
     }
+    void replacementColumns(int id,Task task) throws SQLException{
+        try (Connection connection = getDatabaseConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_DELETE)) {
+            ps.setInt(1, id);
+            ps.execute();
+        }
+        try (Connection connection = getDatabaseConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_INSERT)) {
+            ps.setObject(1, task.getId());
+            ps.setString(2, task.getTitle());
+            ps.setString(3, task.getDescription());
+            ps.setString(4, task.getTitle());
+            ps.setString(5, task.getDescription());
+            ps.execute();
+        }
+
+    }
 
     List<Task> list() throws SQLException {
         List<Task> taskList = new ArrayList<>();//пустой список
