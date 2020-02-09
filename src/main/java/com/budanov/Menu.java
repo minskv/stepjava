@@ -7,23 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 
-//Слой "представления"-- слой внешний вид --  слой общения с пользователем
-/*
-Взаимодействие с пользователем
-- вывод данных
-- ввод данных
-- меню
- */
-public class Menu {
 
-    /*
-    Найти задачу задачу по айди
-    (пользователь вводит айди задачи которую он хочу скопировать)
-    найти по этому айди старую задачу
-    взять её тайтл и дескри
-    сделайть НОВУЮ с такиж ЗАГОЛОВОКОМ И ТЕЛОМ
-    и сохранить(у неё(у копии)) будет новый айди)
-     */
+public class Menu {
+    //git hi
     TaskService taskService = new TaskService();
     Scanner scanner = new Scanner(System.in);
 
@@ -34,7 +20,7 @@ public class Menu {
             System.out.println("2 - add task");
             System.out.println("3 - remove");
             System.out.println("4 - set DONE");
-            System.out.println("5 - copy"); //TODO ДОМОЙ
+            System.out.println("5 - copy");
             System.out.println("6 - view in ascending order"); // добавлен 6 case в switch
             System.out.println("9 - exit");
             m = scanner.nextInt();
@@ -51,6 +37,9 @@ public class Menu {
                     break;
                 case 4:
                     setDone();
+                    break;
+                case 5:
+                    setCopy();
                     break;
                 case 6:
                     viewAsc();
@@ -91,5 +80,12 @@ public class Menu {
         System.out.println("Enter column name");
         String columnName = scanner.nextLine();
         taskService.viewInAsc(columnName);
+    }
+
+    private void setCopy() throws SQLException {
+        System.out.println("Enter task id to copy");
+        int taskID = scanner.nextInt();
+        scanner.nextLine();
+        taskService.setCopy(taskID);
     }
 }

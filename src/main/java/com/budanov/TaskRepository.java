@@ -21,6 +21,7 @@ public class TaskRepository {
             "ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?";
     static final String SQL_SET_IS_DONE = "UPDATE task SET is_done = ? WHERE id = ?";
     static final String SQL_ORDER_BY = "SELECT * FROM tasks ORDER BY %s ASC";
+    static final String SQL_SET_COPY = "INSERT INTO task (title, description) SELECT title, description FROM task WHERE id = ?";
 
     private Connection getDatabaseConnection() throws SQLException {
         String url = "jdbc:mysql://localhost/taskmanager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -86,5 +87,12 @@ public class TaskRepository {
             }
         }
         return sortedTaskList;
+    }
+    void setCopy(int id) throws SQLException {
+        try (Connection connection = getDatabaseConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_SET_COPY)) {
+            ps.setInt(1, id);
+            ps.execute();
+        }
     }
 }
