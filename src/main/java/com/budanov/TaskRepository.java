@@ -21,6 +21,7 @@ public class TaskRepository {
             "ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?";
     static final String SQL_SET_IS_DONE = "UPDATE task SET is_done = ? WHERE id = ?";
     static final String SQL_ORDER_BY = "SELECT * FROM tasks ORDER BY %s ASC";
+    static final String SQL_SET_COPY = "INSERT INTO task (title, description) SELECT title, description FROM task WHERE id = ?";
 
     private Connection getDatabaseConnection() throws SQLException {
         String url = "jdbc:mysql://localhost/taskmanager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -45,23 +46,6 @@ public class TaskRepository {
             ps.setInt(1, id);
             ps.execute();
         }
-    }
-    void replacementColumns(int id,Task task) throws SQLException{
-        try (Connection connection = getDatabaseConnection();
-             PreparedStatement ps = connection.prepareStatement(SQL_DELETE)) {
-            ps.setInt(1, id);
-            ps.execute();
-        }
-        try (Connection connection = getDatabaseConnection();
-             PreparedStatement ps = connection.prepareStatement(SQL_INSERT)) {
-            ps.setObject(1, task.getId());
-            ps.setString(2, task.getTitle());
-            ps.setString(3, task.getDescription());
-            ps.setString(4, task.getTitle());
-            ps.setString(5, task.getDescription());
-            ps.execute();
-        }
-
     }
 
     List<Task> list() throws SQLException {
@@ -89,6 +73,7 @@ public class TaskRepository {
         }
     }
 
+    // Этот метод лишь выводит на экран (в консоль) отсортированный список в алфавитном порядке, не изменяя БД
     List<Task> viewInAsc(String columnName) throws SQLException {
         String sortCommand = String.format(SQL_ORDER_BY, columnName);
         List<Task> sortedTaskList = new ArrayList<>();
@@ -96,12 +81,20 @@ public class TaskRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(sortCommand)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Task task = new Task( resultSet.getString("Title"),
+                Task task = new Task(resultSet.getString("Title"), // в этих строках нужно указать правильные имена колонок со своей БД
                         resultSet.getString("Description"));
                 task.setDone(resultSet.getBoolean("is_done"));
                 sortedTaskList.add(task);
             }
         }
         return sortedTaskList;
+    }
+
+    void setCopy(int id) throws SQLException {
+        try (Connection connection = getDatabaseConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_SET_COPY)) {
+            ps.setInt(1, id);
+            ps.execute();
+        }
     }
 }

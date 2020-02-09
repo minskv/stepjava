@@ -34,4 +34,7 @@ public class TaskService {
     public void viewInAsc(String columnName) throws SQLException  {
         taskRepository.viewInAsc(columnName);
     }
+    public void setCopy(int taskID) throws SQLException {
+        taskRepository.setCopy(taskID);
+    }
 }
