@@ -12,22 +12,27 @@ import java.util.List;
  */
 public class TaskService {
 
-    TaskRepository taskRepository = new TaskRepository();
+    Repository repository;
 
-    public List<Task> list() throws SQLException {
-        return taskRepository.list();
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
-    public void addNewTask(String title, String description) throws SQLException {
+    public List<Task> list() {
+        return repository.list();
+    }
+
+    public void addNewTask(String title, String description) {
         Task newTask = new Task(title, description);
-        taskRepository.save(newTask);
+        repository.save(newTask);
     }
 
-    public void remove(int taskId) throws SQLException {
-        taskRepository.delete(taskId);
+    public void remove(int taskId) {
+        repository.delete(taskId);
     }
 
-    public void setDone(int taskId, boolean isDone) throws SQLException {
-        taskRepository.setIsDone(taskId, isDone);
+    public void setDone(int taskId, boolean isDone) {
+        repository.setIsDone(taskId, isDone);
     }
 }

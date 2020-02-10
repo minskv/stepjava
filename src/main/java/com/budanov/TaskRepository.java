@@ -12,41 +12,45 @@ import java.util.List;
 
 описываем наше хранилище
  */
-public class TaskRepository {
+public class TaskRepository implements Repository {
 
-    static final String SQL_DELETE = "DELETE FROM task WHERE id = ?";
-    static final String SQL_SELECT_ALL = "SELECT * FROM task"; //1 - id, 2 - title, 3 - desc, 4 - isDone
-    static final String SQL_INSERT = "INSERT INTO task (id, title, description) " +
+    static final String SQL_DELETE = "DELETE FROM tasck WHERE id = ?";
+    static final String SQL_SELECT_ALL = "SELECT * FROM tasck"; //1 - id, 2 - title, 3 - desc, 4 - isDone
+    static final String SQL_INSERT = "INSERT INTO tasck (id, title, description) " +
             "VALUES  (?, ?, ?) " +
             "ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?";
-    static final String SQL_SET_IS_DONE = "UPDATE task SET is_done = ? WHERE id = ?";
+    static final String SQL_SET_IS_DONE = "UPDATE tasck SET is_done = ? WHERE id = ?";
 
     private Connection getDatabaseConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost/taskmanager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost/tasckmenedger?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String username = "root";
-        String password = "";
+        String password = "root";
         Connection connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
 
-    void setIsDone(int taskId, boolean isDone) throws SQLException {
+    public void setIsDone(int taskId, boolean isDone) {
         try (Connection connection = getDatabaseConnection();
              PreparedStatement ps = connection.prepareStatement(SQL_SET_IS_DONE)) {
             ps.setBoolean(1, isDone);
             ps.setInt(2, taskId);
             ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
-    void delete(int id) throws SQLException {
+    public void delete(int id) {
         try (Connection connection = getDatabaseConnection();
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE)) {
             ps.setInt(1, id);
             ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
-    List<Task> list() throws SQLException {
+    public List<Task> list() {
         List<Task> taskList = new ArrayList<>();//пустой список
         try (Connection connection = getDatabaseConnection();
              PreparedStatement ps = connection.prepareStatement(SQL_SELECT_ALL)) {
@@ -55,11 +59,13 @@ public class TaskRepository {
                 Task task = new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4));
                 taskList.add(task);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return taskList;
     }
 
-    void save(Task task) throws SQLException {
+    public void save(Task task) {
         try (Connection connection = getDatabaseConnection();
              PreparedStatement ps = connection.prepareStatement(SQL_INSERT)) {
             ps.setObject(1, task.getId());
@@ -68,6 +74,8 @@ public class TaskRepository {
             ps.setString(4, task.getTitle());
             ps.setString(5, task.getDescription());
             ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

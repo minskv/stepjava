@@ -6,25 +6,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-
-//Слой "представления"-- слой внешний вид --  слой общения с пользователем
-/*
-Взаимодействие с пользователем
-- вывод данных
-- ввод данных
-- меню
- */
 public class Menu {
 
-    /*
-    Найти задачу задачу по айди
-    (пользователь вводит айди задачи которую он хочу скопировать)
-    найти по этому айди старую задачу
-    взять её тайтл и дескри
-    сделайть НОВУЮ с такиж ЗАГОЛОВОКОМ И ТЕЛОМ
-    и сохранить(у неё(у копии)) будет новый айди)
-     */
-    TaskService taskService = new TaskService();
+    TaskService taskService;
+
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
     Scanner scanner = new Scanner(System.in);
 
     public void showMenu() throws SQLException {
@@ -34,7 +23,7 @@ public class Menu {
             System.out.println("2 - add task");
             System.out.println("3 - remove");
             System.out.println("4 - set DONE");
-            System.out.println("5 - copy"); //TODO ДОМОЙ
+            System.out.println("5 - copy");//TODO
             System.out.println("9 - exit");
             m = scanner.nextInt();
             scanner.nextLine();
@@ -58,7 +47,7 @@ public class Menu {
     private void list() throws SQLException {
         List<Task> tasks = taskService.list();
         for (Task task : tasks)
-            System.out.println("task: " + task.isDone() + " " + task.getId() + "  " + task.getTitle());
+            System.out.println("Task: " + "| ID :" + task.getId() + " " + "|  Title :       " + task.getTitle() + "|  Description :        " + task.getDescription() + " " + "| is_DONE : " + task.isDone());
     }
 
     private void addNewTask() throws SQLException {
