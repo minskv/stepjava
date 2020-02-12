@@ -1,20 +1,22 @@
 package com.budanov;
 
 import com.budanov.entity.Task;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class Menu {
 
     TaskService taskService;
+    Scanner scanner = new Scanner(System.in);
 
-    public void setTaskService(TaskService taskService) {
+    public Menu(TaskService taskService) {
+        System.out.println("Создание бина--Меню--");
         this.taskService = taskService;
     }
-
-    Scanner scanner = new Scanner(System.in);
 
     public void showMenu() throws SQLException {
         int m;

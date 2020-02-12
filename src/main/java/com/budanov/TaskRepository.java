@@ -2,6 +2,7 @@ package com.budanov;
 
 
 import com.budanov.entity.Task;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 описываем наше хранилище
  */
+@Component
 public class TaskRepository implements Repository {
 
     static final String SQL_DELETE = "DELETE FROM tasck WHERE id = ?";

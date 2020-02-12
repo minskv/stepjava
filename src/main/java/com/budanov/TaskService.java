@@ -1,8 +1,8 @@
 package com.budanov;
 
 import com.budanov.entity.Task;
+import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -10,12 +10,13 @@ import java.util.List;
 Слой бизнес логики, слой сервиса, центральный слой
     промежуточный между "отображением" и "базой  данных"
  */
+@Component
 public class TaskService {
 
     Repository repository;
 
-
-    public void setRepository(Repository repository) {
+    public TaskService(Repository repository) {
+        System.out.println("Создание Таск Сервиса");
         this.repository = repository;
     }
 
