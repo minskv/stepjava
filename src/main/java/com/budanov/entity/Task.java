@@ -4,12 +4,20 @@ package com.budanov.entity;
 entity - классы для хранения данных которые будут
 храниться в базе данных
  */
-
 //Типичное ООП  - объект реального мира который мы описываем
 //хранит всю суть программы - описывает ЗАДАЧУ
-public class Task {
 
+import javax.persistence.*;
+
+
+
+@Entity
+@Table(name = "task")
+public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id; //появится(значит его может НЕ быть=там может быть null) только когда я сохранюсь в базу (потому что база их генерит)
+
     String title;
     String description;
     boolean isDone; //false

@@ -16,15 +16,15 @@ import java.util.List;
 @Component
 public class TaskRepository implements Repository {
 
-    static final String SQL_DELETE = "DELETE FROM tasck WHERE id = ?";
-    static final String SQL_SELECT_ALL = "SELECT * FROM tasck"; //1 - id, 2 - title, 3 - desc, 4 - isDone
-    static final String SQL_INSERT = "INSERT INTO tasck (id, title, description) " +
+    static final String SQL_DELETE = "DELETE FROM task WHERE id = ?";
+    static final String SQL_SELECT_ALL = "SELECT * FROM task"; //1 - id, 2 - title, 3 - desc, 4 - isDone
+    static final String SQL_INSERT = "INSERT INTO task (id, title, description) " +
             "VALUES  (?, ?, ?) " +
             "ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?";
-    static final String SQL_SET_IS_DONE = "UPDATE tasck SET is_done = ? WHERE id = ?";
+    static final String SQL_SET_IS_DONE = "UPDATE task SET is_done = ? WHERE id = ?";
 
     private Connection getDatabaseConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost/tasckmenedger?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost/taskmnger?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String username = "root";
         String password = "root";
         Connection connection = DriverManager.getConnection(url, username, password);
